@@ -1,0 +1,38 @@
+body {
+  font-family: 'OCR B Std', monospace;
+  background-color: #f4f4f4;
+  color: #222;
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: justify;
+}
+
+.face-image {
+  width: 100%;
+  max-width: 200px;
+  display: block;
+  margin: 1rem auto;
+  border: 0px solid #222;
+}
+
+.links {
+  font-family: 'OCR B Std', monospace;
+  background-color: none;
+  color: black;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.links:hover {
+  background-color: #b5afaf;
+}
