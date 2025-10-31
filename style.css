@@ -1,38 +1,597 @@
-body {
-  font-family: 'OCR B Std', monospace;
-  background-color: #f4f4f4;
-  color: #222;
-  padding: 2rem;
-  max-width: 600px;
-  margin: auto;
+/* Load font locally */
+@font-face {
+  font-family: 'OCR B Std';
+  src: url('OCR B Std Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-h1 {
+/* Base styles - applies to all screens */
+body {
+  background: white;
+  margin: 0;
+  padding: 50px 0 0 0;
+  font-family: 'OCR B Std', monospace;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
   text-align: center;
+  width: 100%;
+  flex-grow: 1;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+header {
+  font-size: 2.5em;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  font-family: 'OCR B Std', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+}
+
+/* Typewriter effect - add this class to headers you want animated */
+header.typewriter {
+  overflow: hidden;
+  border-right: 3px solid black;
+  white-space: nowrap;
+  margin: 0 auto 1.5rem auto;
+  width: 0;
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Specific animations for different header lengths */
+header.typewriter.haruumi {
+  animation: typing-haruumi 2s steps(7, end) forwards, blink-caret 0.75s step-end infinite;
+}
+
+header.typewriter.releases {
+  animation: typing-releases 2s steps(8, end) forwards, blink-caret 0.75s step-end infinite;
+}
+
+header.typewriter.otherworks {
+  animation: typing-otherworks 2s steps(11, end) forwards, blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing-haruumi {
+  from { width: 0; }
+  to { width: 7ch; } /* "Haruumi" = 7 characters */
+}
+
+@keyframes typing-releases {
+  from { width: 0; }
+  to { width: 8ch; } /* "Releases" = 8 characters */
+}
+
+@keyframes typing-otherworks {
+  from { width: 0; }
+  to { width: 11ch; } /* "Other works" = 11 characters */
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: black; }
 }
 
 p {
-  text-align: justify;
+  line-height: 1.6;
 }
 
 .face-image {
   width: 100%;
-  max-width: 200px;
+  height: auto;
+  max-width: 150px;
   display: block;
-  margin: 1rem auto;
-  border: 0px solid #222;
+  margin: auto;
+  border: none;
 }
 
 .links {
   font-family: 'OCR B Std', monospace;
   background-color: none;
-  color: black;
+  color: darkgreen;
   text-decoration: none;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem;
 }
 
 .links:hover {
+  color: lightgreen;
+}
+
+.content-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 2rem 0;
+  justify-content: space-between;
+}
+
+.face-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex: 0 0 auto;
+  margin: 0 auto;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  font-size: 1.0em;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-link span {
+  padding-bottom: 0.5rem;
+}
+
+.line-graphic {
+  position: relative;
+  height: 1px;
+  width: 150px;
+}
+
+.line-graphic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: black;
+  width: 100%;
+}
+
+.line-graphic::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.nav-link-left {
+  align-items: flex-start;
+  text-align: left;
+  position: relative;
+  bottom: 100px;
+  color: darkgreen;
+}
+
+.nav-link-left .line-graphic::before {
+  left: 0;
+}
+
+.nav-link-left .line-graphic::after {
+  right: 0;
+}
+
+.nav-link-right {
+  align-items: flex-end;
+  text-align: right;
+  color: darkgreen;
+}
+
+.nav-link-right span {
+  order: 1;
+}
+
+.nav-link-right .line-graphic {
+  order: 2;
+}
+
+.nav-link-right .line-graphic::before {
+  right: 0;
+}
+
+.nav-link-right .line-graphic::after {
+  left: 0;
+}
+
+.nav-link-left:hover,
+.nav-link-right:hover {
+  color: lightgreen;
+}
+
+.releases-button:hover {
   background-color: #b5afaf;
+}
+
+.releases-image {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  display: block;
+  margin: auto;
+  border: none;
+}
+
+/* Fixed scrolling banner - consistent across all pages */
+.scrolling-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 2.5rem;
+  font-family: 'OCR B Std', monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  background: white;
+  color: #fff;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  z-index: 1000;
+}
+
+.marquee-content {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  white-space: nowrap;
+  animation: marquee 25s linear infinite;
+  text-decoration: none;
+  font-size: 0.9em;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Releases page styles */
+.back-link {
+  display: block;
+  text-align: left;
+  font-size: 0.75em;
+  color: #555;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  font-weight: normal;
+}
+
+.back-link:hover {
+  color: #000;
+}
+
+.releases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  text-align: left;
+  justify-items: center;
+  padding-bottom: 3rem;
+}
+
+.release-item {
+  text-decoration: none;
+  color: #222;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  max-width: 300px;
+  width: 100%;
+}
+
+.release-item:hover {
+  transform: scale(1.03);
+  opacity: 0.8;
+}
+
+.release-item img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.release-title {
+  font-weight: normal;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 1em;
+  text-align: left;
+}
+
+.release-type {
+  font-size: 0.9em;
+  color: #555;
+  margin: 0;
+  text-align: left;
+}
+
+/* ================================
+   MOBILE RESPONSIVE STYLES
+   ================================ */
+
+/* Tablets and smaller */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 30px 0 0 0;
+  }
+  
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  
+  header {
+    font-size: 2em;
+  }
+  
+  .content-row {
+    margin: 1.5rem 0;
+  }
+  
+  .face-image {
+    max-width: 120px;
+  }
+  
+  .line-graphic {
+    width: 100px;
+  }
+  
+  .nav-link {
+    font-size: 0.9em;
+  }
+  
+  .nav-link-left {
+    bottom: 80px;
+  }
+  
+  .releases-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .scrolling-banner {
+    height: 2.5rem;
+  }
+  
+  .marquee-content {
+    font-size: 0.8em;
+  }
+}
+
+/* Mobile phones */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 20px 0 0 0;
+  }
+  
+  .container {
+    padding: 1rem 1.5rem;
+    max-width: 100%;
+  }
+  
+  header {
+    font-size: 1.75em;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 0.95em;
+  }
+  
+  .content-row {
+    margin: 2rem 0;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .face-image {
+    max-width: 130px;
+  }
+  
+  .face-button {
+    margin: 0;
+    flex-shrink: 0;
+  }
+  
+  .line-graphic {
+    width: 70px;
+  }
+  
+  .nav-link {
+    font-size: 0.8em;
+    flex-shrink: 0;
+  }
+  
+  .nav-link span {
+    padding-bottom: 0.3rem;
+    white-space: nowrap;
+    font-size: 0.95em;
+  }
+  
+  /* Both links positioned symmetrically */
+  .nav-link-left {
+    bottom: 20px;
+  }
+  
+  .nav-link-right {
+    bottom: 20px;
+  }
+  
+  .links {
+    padding: 0.2rem 0.4rem;
+    margin: 0.2rem;
+    font-size: 0.95em;
+  }
+  
+  .releases-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .release-item {
+    max-width: 100%;
+  }
+  
+  .back-link {
+    font-size: 0.9em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .scrolling-banner {
+    height: 2rem;
+  }
+  
+  .marquee-content {
+    font-size: 0.7em;
+  }
+}
+
+/* Very small phones */
+@media screen and (max-width: 360px) {
+  header {
+    font-size: 1.5em;
+  }
+  
+  .container {
+    padding: 1rem 1rem;
+  }
+  
+  .content-row {
+    gap: 0.75rem;
+  }
+  
+  .face-image {
+    max-width: 100px;
+  }
+  
+  .line-graphic {
+    width: 40px;
+  }
+  
+  .nav-link {
+    font-size: 0.8em;
+  }
+  
+  .nav-link span {
+    font-size: 0.85em;
+  }
+  
+  .nav-link-left {
+    bottom: 35px;
+  }
+  
+  .scrolling-banner {
+    height: 1.75rem;
+  }
+  
+  .marquee-content {
+    font-size: 0.65em;
+  }
+}
+
+
+
+/* ================================
+   Release Page Layout
+   ================================ */
+
+.release-page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.release-header header {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1em;
+}
+
+.release-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.release-artwork img {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  display: block;
+}
+
+.release-info {
+  flex: 1;
+  min-width: 280px;
+
+}
+
+.release-details h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.release-meta {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0.2rem 0;
+}
+
+.streaming-links {
+  margin-top: 1.5rem;
+}
+
+.stream-button {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-bottom: 0.75rem;
+  color: darkgreen;
+  text-decoration: none;
+  border: 1px solid darkgreen;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.stream-button:hover {
+  color: white;
+  background: darkgreen;
+}
+
+.tracklist {
+  margin-top: 2rem;
+}
+
+.tracklist h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
